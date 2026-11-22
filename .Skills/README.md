@@ -1,68 +1,58 @@
-# Narrative Engine V3 — Lorebook Edition (Uncensored Hardened)
+# Narrative Engine V3 — Modular Skill Tree
 
-**Version:** 1.1.1-uncensored  
-**Target:** JanitorAI + SillyTavern-style World Info  
-**Posture:** Fully uncensored. No content sanitization, no moral filtering of sexual, violent, dark, taboo, or extreme material when it is part of the concept.
+**Package version:** 1.1.1  
+**Operational AI-skill procedures:** Phases 1–13  
+**Model/runtime testing:** pending for all regression specifications  
+**Purpose:** A modular narrative concept and roleplay-project creation system that prepares project assets and handoffs for a separate roleplay AI. It does not act as that roleplayer.
 
-This is the same Narrative Engine V3 system (Phases 1–13) packaged as modular lorebook JSON entries instead of a Markdown skill tree.
+## Start here
 
-## Discensorship changes (this edition)
-- Added always-on **Core — No Content Censorship** constant entry.
-- Rewrote **Tag — Uncensored** for full adult/extreme content fidelity; removed “higher-priority platform or safety constraints” deference.
-- Updated Command Router conflict handling: content is never filtered for being sexual/violent/dark/taboo.
-- Strengthened Uncensored handling across Character, Context Sheet, Scenario, Description, Analysis, Lorebook Planning, and QA modules.
-- Removed “platform and policy limits” language from Lorebook Planning.
+1. Read `SKILL.md` — root orchestrator.
+2. Read `INDEX.md` — command and subsystem routing.
+3. Read `IMPLEMENTATION_STATUS.md` — implementation and testing status.
+4. Read `ARCHITECTURE_MAP.md` — target architecture and phase map.
+5. Load the relevant subsystem skill and only its named dependencies.
 
-Functional systems (routing, Bedrocks, adaptive sections, QA, etc.) are preserved.
+Keep the folder structure intact. Do not flatten this package into one large prompt. The root skill routes; detailed procedures live in modular files and should be loaded progressively.
 
----
+## Implemented systems
 
-# Narrative Engine V3 — Lorebook Edition (Separate Alternative)
+- **Phases 1–5:** root identity/orchestration; command routing, workflow, project isolation; Bedrocks; adaptive sections, information transfer, evidence/inference; tag registry and individual tag definitions.
+- **Phase 6 — Analysis:** Analysis Sheet, concept analysis, image/reference analysis, context reconstruction, RP-log analysis, character analysis, and world analysis.
+- **Phase 7 — Character & World Creation:** finished Character Sheets and World Sheets using adaptive sections and shared constraints.
+- **Phase 8 — Context Sheet:** comprehensive, self-contained narrator-facing project handoff.
+- **Phase 9 — Scenario:** requested quantity of opening messages only, with the four-part notation format and user-agency safeguards.
+- **Phase 10 — Description:** human-facing Markdown descriptions, distinct from AI-facing handoffs.
+- **Phase 11 — Lorebook Planning:** implementation handoff for another Lorebook Creator; no actual JSON or JavaScript is produced.
+- **Phase 12 — Refinement & Expansion:** targeted patch edits and controlled additive development across supported artifacts.
+- **Phase 13 — Quality Assurance:** mandatory internal finalization with coverage, consistency, and output-specific validators.
 
-This ZIP contains a separate Lorebook implementation of the Narrative Engine V3 system. It does **not** modify, replace, or overwrite the existing V3 Skill Tree. The Skill Tree remains the primary implementation; this package is an alternative deployment approach as requested.
+## Phase 12 at a glance
 
-## Files
+- `refinement/patch-refinement/SKILL.md` — minimal targeted patching.
+- `refinement/patch-refinement/patch-operations.md` — edit operation semantics and preservation.
+- `refinement/patch-refinement/artifact-dependency-map.md` — selective synchronization of existing dependent artifacts.
+- `refinement/expansion/SKILL.md` — additive expansion without replacing established layers.
+- `refinement/expansion/expansion-methods.md` — expansion method selector and depth controls.
 
-- `00_CORE_SYSTEM_CONSTANT.json` — the always-active core system. All entries in this file use `constant: true`.
-- `01_COMMANDS_AND_SESSION_CONTROL.json` — command parsing, project workflow, Help, and in-session project isolation.
-- `02_ANALYSIS_SYSTEMS.json` — Analysis Sheet, concept analysis, reference routing, context reconstruction, RP log, character, and world analysis.
-- `03_CAPTION_BASED_REFERENCE_INTERPRETATION.json` — dedicated caption-only reference interpreter. This replaces direct image-vision analysis.
-- `04_TAG_SYSTEM.json` — readable tag registry and individual built-in tag entries.
-- `05_CHARACTER_AND_WORLD_CREATION.json` — character and world generation procedures.
-- `06_CONTEXT_SHEET.json` — narrator-facing Context Sheet generation.
-- `07_SCENARIO_STARTING_MESSAGES.json` — opening-message generation, opening design, style and four-part format.
-- `08_DESCRIPTION_GENERATION.json` — human-facing Markdown descriptions.
-- `09_LOREBOOK_PLANNING.json` — detailed Lorebook Planning handoff system plus source-derived technical reference.
-- `10_REFINEMENT_AND_EXPANSION.json` — patch refinement and additive expansion.
-- `11_QUALITY_ASSURANCE.json` — coverage, consistency, and output validators.
-- `ALL_LOREBOOKS_COMBINED.json` — all entries in one JSON array for platforms that prefer one import file. This duplicates the separate files; do not import both the individual files and the combined file together.
+## Phase 13 at a glance
 
-## Recommended import
+- `quality/SKILL.md` — QA orchestration, severity, safe repair, revalidation, and concise reporting.
+- `quality/coverage-validation/SKILL.md` — approved information transfer and Context Sheet completeness.
+- `quality/consistency-validation/SKILL.md` — Bedrocks, canon, chronology, relationships, world rules, and cross-artifact checks.
+- `quality/output-validation/SKILL.md` — artifact-specific output contracts and tag behavior.
+- `tests/phase-13-quality-assurance-regression-tests.md` — 66 regression specifications.
+- `tests/VALIDATION_RUN_TEMPLATE.md` — records actual model/runtime test executions.
 
-1. Import `00_CORE_SYSTEM_CONSTANT.json` and keep it enabled as the constant / always-active core Lorebook.
-2. Import the section Lorebooks that the target platform supports. Keep their entries enabled; they use keyword activation (`constant: false`).
-3. If the platform supports only a single Lorebook import, use `ALL_LOREBOOKS_COMBINED.json` instead of importing the separate section files.
-4. Do not import both the combined file and the individual files, or entries will be duplicated.
-5. Check how the target platform handles `priority`, `insertion_order`, `matchWholeWords`, and constant entries. The supplied Lorebook Creator schema is source guidance, not a guarantee of identical behavior across every runtime.
+## AI procedures versus executable code
 
-## Activation design
+This is a Markdown Skill system for an LLM. Its operating procedures are instructions, decision rules, routing logic, output contracts, and checks. It does not include executable Python/JavaScript functions, APIs, plugins, or an automated runtime.
 
-The core system entries are always active. Section-level entries activate on command phrases or project terms, such as `Create Sheet`, `Create Character`, `Create World`, `Create Context Sheet`, `Create Scenario`, `Create Description`, `Plan Lorebooks`, `Refine`, `Expand`, and `Review`.
+“Implemented” means the AI instructions have been written. It does not mean a target model has passed behavioral testing. Regression files are specifications until executed against a selected LLM/runtime. Phase 13 is implemented as AI instructions; its test suite has not yet been executed against a target model/runtime.
 
-Some specialist entries intentionally share command triggers. For example, `Create Sheet` may activate the Analysis Sheet coordinator plus concept, character, and world analysis entries. Each specialist procedure must still run only if its subject is relevant to the current project.
+## Source references
 
-Tags use `constant: false` with their human-readable names and legacy V2 aliases as activation keys. Uncensored may also activate from strong descriptive signals such as sharp-tongued, bratty, vulgar, or profane speech; it must remain scoped to the character/project detail that supports it.
-
-## Caption-only reference mode
-
-This edition assumes the downstream AI does not have image vision. It must work from user-supplied captions or text descriptions only. The user's written concept and direct instructions always outrank caption text. Captions are noisy candidate evidence: accept only details that match the concept and reference purpose; discard irrelevant, contradictory, or illogical details.
-
-Example: if the user describes a blonde woman and a caption says “a woman with blonde hair looking up at the sky, wearing a white silky dress, hands behind her back,” the system may accept “woman” and “blonde hair”; it may record the white dress as the outfit represented by the caption if clothing is in scope; it must not convert “looking up” or “hands behind her back” into permanent traits unless the user wants a scenario reference. It must not claim that it visually verified any of this.
-
-## JSON format
-
-Every individual file is a JSON array of Lorebook entry objects using the full field list from the supplied `lorebook-creator-skill` reference: `activationMode`, `activationScript`, `case_sensitive`, `category`, `comment`, `constant`, `content`, `enabled`, `extensions`, `groupWeight`, `id`, `inclusionGroupRaw`, `insertion_order`, `key`, `keyMatchPriority`, `keysecondary`, `keysecondaryRaw`, `keysRaw`, `matchWholeWords`, `minMessages`, `name`, `prioritizeInclusion`, `priority`, `probability`, `selectiveLogic`, `tags`, and `keywordsRaw`.
-
-## Important boundary
-
-This package provides Lorebook instructions as a separate deployment approach. It does not change the primary V3 Skill Tree. The `Lorebook Planning` subsystem inside V3 remains a planning handoff and does not become a Lorebook JSON generator merely because this alternative package is made of Lorebook JSON.
+- `references/System Prompt V2.txt` — original V2 prompt preserved as a legacy baseline.
+- `references/lorebook-creator-skill.zip` — supplied Lorebook Creator reference package.
+- `references/NOTION_PLAN_REFERENCE.md` — pointer to the V3 architecture plan.
+- Notion architecture plan: https://app.notion.com/p/41f081bf3aaf814b449fb9a7e7b369f
